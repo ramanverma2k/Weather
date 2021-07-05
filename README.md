@@ -1,6 +1,14 @@
 # weather
 
-A new Flutter project.
+## Screenshots
+<p align="center">
+  <img width="32%" src="demo/home.jpg?raw=true">
+  <img width="32%" src="demo/home1.png?raw=true">
+  <img width="32%" src="demo/search.png?raw=true">
+
+  ### Demo
+  <img width="32%" src="demo/demo.gif?raw=true">
+</p>
 
 ## Getting Started
 
