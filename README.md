@@ -1,4 +1,6 @@
-# weather
+# Weather
+
+A Flutter application to display current temperature in your location.
 
 ## Screenshots
 <p align="center">
@@ -10,15 +12,37 @@
   <img width="32%" src="demo/demo.gif?raw=true">
 </p>
 
-## Getting Started
+## Plugins
+- [geolocator](https://pub.dev/packages/geolocator)
+- [http](https://pub.dev/packages/http)
+- [flutter_spinkit](https://pub.dev/packages/flutter_spinkit)
 
-This project is a starting point for a Flutter application.
+## Run Locally
 
-A few resources to get you started if this is your first Flutter project:
+Make sure that you have flutter and dart installed and setup.
+If you don't then refer to the official installation instructions at [Flutter Docs](https://flutter.dev/docs/get-started/install)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Then run the following commands
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Clone the project
+
+```bash
+  git clone https://github.com/ramanverma2k/Weather
+```
+
+Go to the project directory
+
+```bash
+  cd Weather
+```
+
+Run the app
+
+```bash
+  flutter run
+```
+
+## Roadmap
+- Displaying a 7 day forecast and more weather related data.
+- Complete Ui/UX overhaul, for now it looks just average.
+- Adding the capapbility to show weather for multiple locations at once.
