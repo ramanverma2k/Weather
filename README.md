@@ -3,8 +3,8 @@
 ## Screenshots
 <p align="center">
   <img width="32%" src="demo/home.jpg?raw=true">
-  <img width="32%" src="demo/home1.jpg?raw=true">
   <img width="32%" src="demo/search.jpg?raw=true">
+  <img width="32%" src="demo/home1.jpg?raw=true">
 
   ### Demo
   <img width="32%" src="demo/demo.gif?raw=true">
