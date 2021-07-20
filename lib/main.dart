@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:weatherium/screens/homescreen.dart';
+import 'package:weatherium/screens/loadingscreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,7 +11,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: ThemeData(
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
           textTheme:
               GoogleFonts.montserratTextTheme(Theme.of(context).textTheme)),
       title: 'Weatherium',
-      home: HomeScreen(),
+      home: LoadingScreen(),
     );
   }
 }
