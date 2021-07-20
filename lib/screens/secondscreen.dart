@@ -5,7 +5,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 class SecondScreen extends StatelessWidget {
-  const SecondScreen({Key? key}) : super(key: key);
+  const SecondScreen({Key? key, required this.weatherData}) : super(key: key);
+
+  final weatherData;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class SecondScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        title: Text('Jingalala'),
+        title: Text('${weatherData['city']}'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -86,7 +88,7 @@ class SecondScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  '${DateFormat('EEEEE').format(DateTime.parse('${20210719 + index}'))}',
+                                  '${DateFormat('EEEEE').format(DateTime.fromMillisecondsSinceEpoch(weatherData['daily'][index]['dt'] * 1000))}',
                                   style: TextStyle(
                                       fontSize: 20, color: Colors.white),
                                 ),
@@ -97,7 +99,7 @@ class SecondScreen extends StatelessWidget {
                             Align(
                               alignment: Alignment.center,
                               child: Text(
-                                '28 21',
+                                '${weatherData['daily'][index]['temp']['max'].toInt()}°    ${weatherData['daily'][index]['temp']['min'].toInt()}°',
                                 style: TextStyle(
                                     fontSize: 20, color: Colors.white),
                               ),
