@@ -20,7 +20,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void setWeatherData() async {
     Map<String, dynamic>? weatherData = await getWeatherData();
 
-    Get.to(() => HomeScreen(weatherData: weatherData));
+    Get.off(() => HomeScreen(weatherData: weatherData));
   }
 
   @override
