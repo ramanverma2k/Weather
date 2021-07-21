@@ -19,26 +19,28 @@ class _HomeScreenState extends State<HomeScreen> {
   var humidity;
   var condition;
   var date;
-  var selectedIndex;
+  var selectedIndex = 0;
 
   void updateWeather(Map<String, dynamic> weatherData) {
     setState(() {
       if ((DateFormat('EEE, d MMM')
-              .format(DateTime.fromMillisecondsSinceEpoch(
-                  widget.weatherData['current']['dt'] * 1000))
+              .format(
+                  DateTime.fromMillisecondsSinceEpoch(weatherData['dt'] * 1000))
               .toString() ==
           DateFormat('EEE, d MMM').format(DateTime.now()).toString())) {
-        temp = widget.weatherData['current']['temp'].toInt();
-        windSpeed = widget.weatherData['current']['wind_speed'];
-        humidity = widget.weatherData['current']['humidity'];
+        temp = weatherData['temp'].toInt();
+        windSpeed = weatherData['wind_speed'];
+        humidity = weatherData['humidity'];
         condition = toBeginningOfSentenceCase(
-            '${widget.weatherData['current']['weather'][0]['description']}');
+            '${weatherData['weather'][0]['description']}');
+        date = weatherData['dt'];
       } else {
-        temp = widget.weatherData['daily']['temp']['max'].toInt();
-        windSpeed = widget.weatherData['daily']['wind_speed'];
-        humidity = widget.weatherData['daily']['humidity'];
+        temp = weatherData['temp']['max'].toInt();
+        windSpeed = weatherData['wind_speed'];
+        humidity = weatherData['humidity'];
         condition = toBeginningOfSentenceCase(
-            '${widget.weatherData['daily']['weather'][0]['description']}');
+            '${weatherData['weather'][0]['description']}');
+        date = weatherData['dt'];
       }
     });
   }
@@ -46,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    updateWeather(widget.weatherData);
+    updateWeather(widget.weatherData['current']);
   }
 
   @override
@@ -72,15 +74,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     onHorizontalDragEnd: (details) {
                       if (details.primaryVelocity! < 0) {
                         setState(() {
-                          if (selectedIndex <= 8) {
+                          if (selectedIndex < 8) {
                             selectedIndex++;
-                            updateWeather(widget.weatherData);
+                            selectedIndex == 0
+                                ? updateWeather(widget.weatherData['current'])
+                                : updateWeather(
+                                    widget.weatherData['daily'][selectedIndex]);
                           }
                         });
                       } else if (details.primaryVelocity! > 0) {
                         setState(() {
                           if (selectedIndex > 0) {
                             selectedIndex--;
+                            selectedIndex == 0
+                                ? updateWeather(widget.weatherData['current'])
+                                : updateWeather(
+                                    widget.weatherData['daily'][selectedIndex]);
                           }
                         });
                       }
@@ -125,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: 20,
                                 width: 130,
                                 child: ListTile(
-                                  key: Key(date),
+                                  key: Key(date.toString()),
                                   selected:
                                       selectedIndex == index ? true : false,
                                   title: Text(
