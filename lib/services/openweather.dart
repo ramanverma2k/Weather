@@ -13,7 +13,7 @@ Future<Map<String, dynamic>?> getWeatherData() async {
 
   String _apiKey = '';
   String _url =
-      'https://api.openweathermap.org/data/2.5/onecall?lat=${position.latitude}&lon=${position.longitude}&units=metric&exclude=minutely&appid=$_apiKey';
+      'https://api.openweathermap.org/data/2.5/onecall?lat=${position.latitude}&lon=${position.longitude}&units=metric&exclude=minutely,alerts&appid=$_apiKey';
 
   Response response = await get(Uri.parse(_url));
   if (response.statusCode == 200) {
