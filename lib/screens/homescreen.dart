@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:weatherium/screens/secondscreen.dart';
+import 'package:weatherium/utilites/getIcon.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.weatherData}) : super(key: key);
@@ -68,12 +68,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final String assetName = 'assets/icons/wsymbol_0001_sunny.svg';
-    final Widget svg = SvgPicture.asset(
-      assetName,
-      semanticsLabel: 'Acme Logo',
-      height: 250,
-    );
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -117,7 +111,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               style:
                                   TextStyle(fontSize: 30, color: Colors.white)),
                         ),
-                        svg,
+                        getIcon(
+                            '${widget.weatherData['current']['weather'][0]['description']}'),
                         Text('$condition',
                             style:
                                 TextStyle(fontSize: 30, color: Colors.white)),
@@ -191,6 +186,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white),
                                         ),
+                                        getIcon(
+                                            '${hourly[index]['weather'][0]['description']}',
+                                            height: 40),
                                         Text(
                                           '${hourly[index]['temp'].toInt()}°',
                                           style: TextStyle(
