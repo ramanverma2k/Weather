@@ -19,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var humidity;
   var condition;
   var date;
+  List<dynamic> hourly = [];
   var selectedIndex = 0;
 
   void updateWeather(Map<String, dynamic> weatherData) {
@@ -34,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
         condition = toBeginningOfSentenceCase(
             '${weatherData['weather'][0]['description']}');
         date = weatherData['dt'];
+        updateHourlyWeather(widget.weatherData['hourly'], date);
       } else {
         temp = weatherData['temp']['max'].toInt();
         windSpeed = weatherData['wind_speed'];
@@ -41,8 +43,21 @@ class _HomeScreenState extends State<HomeScreen> {
         condition = toBeginningOfSentenceCase(
             '${weatherData['weather'][0]['description']}');
         date = weatherData['dt'];
+        updateHourlyWeather(widget.weatherData['hourly'], date);
       }
     });
+  }
+
+  void updateHourlyWeather(List<dynamic> weatherData, int date) {
+    hourly.clear();
+    weatherData.forEach((e) => ((DateFormat('EEE, d MMM')
+                .format(DateTime.fromMillisecondsSinceEpoch(e['dt'] * 1000))
+                .toString() ==
+            DateFormat('EEE, d MMM')
+                .format(DateTime.fromMillisecondsSinceEpoch(date * 1000))
+                .toString())
+        ? hourly.add(e)
+        : null));
   }
 
   @override
@@ -153,6 +168,45 @@ class _HomeScreenState extends State<HomeScreen> {
                             shrinkWrap: true,
                           ),
                         ),
+                        SizedBox(height: 40),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.2,
+                          child: ListView.builder(
+                            itemCount: hourly.length,
+                            itemBuilder: (context, index) {
+                              return SizedBox(
+                                height: 20,
+                                width: 130,
+                                child: Card(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          '${DateFormat('jm').format(DateTime.fromMillisecondsSinceEpoch(hourly[index]['dt'] * 1000))}',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ),
+                                        Text(
+                                          '${hourly[index]['temp'].toInt()}°',
+                                          style: TextStyle(
+                                              fontSize: 40,
+                                              color: Colors.white),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -164,26 +218,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-  Widget hourlyCard(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.2,
-      width: MediaQuery.of(context).size.width * 0.30,
-      child: Card(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Text(
-                '${DateFormat('jm').format(DateTime.fromMillisecondsSinceEpoch(widget.weatherData['hourly']['dt'] * 1000))}',
-                style: TextStyle(fontSize: 19, color: Colors.white)),
-            Icon(Icons.wb_cloudy_outlined, size: 60, color: Colors.white),
-            Text(
-              '${widget.weatherData['hourly']['temp'].toInt()}°',
-              style: TextStyle(fontSize: 40, color: Colors.white),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
+
+// DateFormat('jm')
