@@ -86,8 +86,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       Get.to(
                           () => SecondScreen(weatherData: widget.weatherData));
                     },
-                    onHorizontalDragEnd: (details) {
-                      if (details.primaryVelocity! < 0) {
+                    onHorizontalDragEnd: (DragEndDetails details) {
+                      if (details.primaryVelocity! < 1) {
                         setState(() {
                           if (selectedIndex < 8) {
                             selectedIndex++;
@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     widget.weatherData['daily'][selectedIndex]);
                           }
                         });
-                      } else if (details.primaryVelocity! > 0) {
+                      } else if (details.primaryVelocity! > 1) {
                         setState(() {
                           if (selectedIndex > 0) {
                             selectedIndex--;
